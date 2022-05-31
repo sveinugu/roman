@@ -3,7 +3,13 @@ from collections import namedtuple
 DecimalRange = namedtuple('DecimalRange', ('min', 'max'))
 
 roman_letter_to_decimal_range = {
-    'I': DecimalRange(1, 5), 'V': DecimalRange(5, 10), 'X': DecimalRange(10, 50)
+    'I': DecimalRange(1, 5),
+    'V': DecimalRange(5, 10),
+    'X': DecimalRange(10, 50),
+    'L': DecimalRange(50, 100),
+    'C': DecimalRange(100, 500),
+    'D': DecimalRange(500, 1000),
+    'M': DecimalRange(1000, 4000),
 }
 
 
