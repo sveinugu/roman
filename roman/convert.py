@@ -1,7 +1,13 @@
+from collections import namedtuple
+
+DecimalRange = namedtuple('DecimalRange', ('min', 'max'))
+
+roman_letter_to_decimal_range = {
+    'I': DecimalRange(1, 5), 'V': DecimalRange(5, 10), 'X': DecimalRange(10, 50)
+}
+
+
 def decimal_to_roman(number: int) -> str:
-    if number < 5:
-        return 'I' * number
-    elif number < 10:
-        return 'V' + 'I' * (number - 5)
-    else:
-        return 'X' + 'I' * (number - 10)
+    for roman_letter, decimal_range in roman_letter_to_decimal_range.items():
+        if number < decimal_range.max:
+            return roman_letter + 'I' * (number - decimal_range.min)
