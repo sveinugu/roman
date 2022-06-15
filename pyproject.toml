@@ -13,6 +13,7 @@ yapf = "^0.32.0"
 toml = "^0.10.2"
 isort = "^5.10.1"
 pytest = "^7.1.2"
+hypothesis = "^6.46.9"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

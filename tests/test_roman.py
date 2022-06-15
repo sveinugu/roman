@@ -1,5 +1,22 @@
+from hypothesis import assume
+from hypothesis import given
+from hypothesis import settings
+from hypothesis import Verbosity
+from hypothesis.strategies import integers
+from hypothesis.strategies import sampled_from
+
 from roman import __version__
 from roman import convert
+
+roman_letter_to_base_decimal = {
+    'I': 1,
+    'V': 5,
+    'X': 10,
+    'L': 50,
+    'C': 100,
+    'D': 500,
+    'M': 1000,
+}
 
 
 def test_version():
@@ -40,3 +57,17 @@ def test_simple_numbers():
     assert convert.decimal_to_roman(1001) == 'MI'
     assert convert.decimal_to_roman(1002) == 'MII'
     assert convert.decimal_to_roman(1003) == 'MIII'
+
+
+@given(sampled_from('IVXLCDM'), integers(min_value=0, max_value=3))
+@settings(print_blob=True, verbosity=Verbosity.verbose)
+def test_simple_numbers_propbased(roman_letter, extra_i_count):
+    assume(not (roman_letter == 'I' and extra_i_count == 3))  # exclude 'IIII'
+
+    decimal = roman_letter_to_base_decimal[roman_letter] + extra_i_count
+
+    roman_number = convert.decimal_to_roman(decimal)
+
+    assert roman_number[0] == roman_letter
+    assert len(roman_number[1:]) == extra_i_count
+    assert all(letter == 'I' for letter in roman_number[1:])
